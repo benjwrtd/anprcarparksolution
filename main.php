@@ -8,8 +8,12 @@ jQuery(document).ready(function(){
 	function autorefresh1(){
 		$("#loadindex").load("index.php");
 	}
-autorefresh1();
+document.getElementById('forms').style.display = 'none';
 setInterval(autorefresh1,2000);
+setTimeout(function(){
+document.getElementById('forms').style.display = 'block'
+document.getElementById('load').style.display = 'none'
+},2000);
 });
 </script>
 
@@ -52,6 +56,9 @@ setInterval(autorefresh1,2000);
 <?php
 include('sql.php');
 $values = array();
+function alert($msg) {
+    echo "<script type='text/javascript'>alert('$msg');</script>";
+}
 if(isset($_POST["upload"]))
 {
 $count=0;
@@ -76,12 +83,13 @@ $count=0;
 		}
 		else
 		{
-			$message = '<label class ="text-danger">Please Select CSV File only.</label>';
+			alert("CSV Files only not .".$filename[1]);
+			echo $message;
 		}
 	}
 	else
 	{
-		$message = '<label class ="text-danger">Please Select File</label>';
+		alert("Please select a CSV file.");
 	}
 fclose($handle);
 }
@@ -90,6 +98,7 @@ fclose($handle);
 
 ?>
 
+<div class="loader" id="load"></div>
 
 
 
